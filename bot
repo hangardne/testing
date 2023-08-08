@@ -1,0 +1,33 @@
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+
+# Handler function for the /start command
+def start(update, context):
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Hello! I am a Telegram bot!")
+
+# Handler function for text messages
+def echo(update, context):
+    context.bot.send_id=update.effective_chat.id, text=update.message.text)
+
+def main():
+    # Create an instance of the Updater and pass your bot token
+    updater = Updater(token='YOUR_TOKEN_HERE', use_context=True)
+
+    # Get the dispatcher instance
+    dispatcher = updater.dispatcher
+
+    # Assign handlers to commands
+    start_handler = CommandHandler('start', start)
+    dispatcher.add_handler(start_handler)
+
+    # Assign handler to text messages
+    echo_handler = MessageHandler(Filters.text & (~Filters.command), echo)
+    dispatcher.add_handler(echo_handler)
+
+    # Start the bot
+    updater.start_polling()
+
+    # Stop the bot manually by pressing CTRL + C in the console
+    updater.idle()
+
+if __name__ == '__main__':
+    main()
